@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Agua Limpia, Vida Sana</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        body{
+            background:#f4fbfc;
+            color:#243746;
+            line-height:1.6;
+        }
+
+        header{
+            background:linear-gradient(135deg,#0077b6,#00b4d8);
+            color:white;
+            padding:1rem 8%;
+            position:sticky;
+            top:0;
+            z-index:1000;
+            box-shadow:0 3px 10px rgba(0,0,0,.15);
+        }
+
+        .navbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+        }
+
+        .logo{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            font-size:1.2rem;
+            font-weight:bold;
+        }
+
+        .logo-circle{
+            width:50px;
+            height:50px;
+            border-radius:12px;
+            background:rgba(255,255,255,.2);
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            font-weight:bold;
+        }
+
+        nav ul{
+            list-style:none;
+            display:flex;
+            gap:25px;
+            flex-wrap:wrap;
+        }
+
+        nav a{
+            color:white;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
+        .hero{
+
+            min-height:85vh;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            text-align:center;
+
+            padding:4rem 8%;
+
+            background:
+            linear-gradient(rgba(0,80,120,.75),rgba(0,80,120,.75)),
+            url("https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80");
+
+            background-size:cover;
+            background-position:center;
+
+            color:white;
+        }
+
+        .hero-content{
+            max-width:900px;
+        }
+
+        .hero h1{
+            font-size:3rem;
+            margin-bottom:20px;
+        }
+
+        .ods-tags{
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-wrap:wrap;
+            margin-top:20px;
+        }
+
+        .tag{
+            padding:10px 18px;
+            border-radius:25px;
+            background:rgba(255,255,255,.18);
+        }
+
+        section{
+            padding:75px 8%;
+        }
+
+        .section-title{
+            text-align:center;
+            margin-bottom:45px;
+        }
+
+        .section-title h2{
+            color:#0d4f63;
+            margin-bottom:10px;
+        }
+
+        .cards,
+        .steps{
+
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+            gap:25px;
+
+        }
+
+        .card,
+        .step{
+
+            background:white;
+
+            padding:28px;
+
+            border-radius:16px;
+
+            border:1px solid #d8e6ea;
+
+            box-shadow:0 3px 10px rgba(0,0,0,.05);
+
+        }
+
+        .card-icon{
+
+            width:55px;
+            height:55px;
+
+            border-radius:50%;
+
+            background:#eaf6f8;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            font-size:.8rem;
+            font-weight:bold;
+
+            margin-bottom:15px;
+
+        }
+
+        .step span{
+
+            width:40px;
+            height:40px;
+
+            display:inline-flex;
+            justify-content:center;
+            align-items:center;
+
+            border-radius:50%;
+
+            background:#dbeef2;
+
+            font-weight:bold;
+
+        }
+
+        .step h3{
+            margin:15px 0;
+        }
+
+        .map-box{
+
+            background:white;
+
+            padding:30px;
+
+            border-radius:20px;
+
+            box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+        }
+
+        .map-container{
+            position:relative;
+        }
+
+        #map{
+
+            height:500px;
+            width:100%;
+
+            border-radius:15px;
+
+            border:1px solid #d8e6ea;
+
+        }
+
+        .map-alert{
+
+            position:absolute;
+
+            top:20px;
+            right:20px;
+
+            width:240px;
+
+            z-index:1000;
+
+            background:rgba(255,255,255,.95);
+
+            border-radius:12px;
+
+            padding:18px;
+
+            box-shadow:0 3px 10px rgba(0,0,0,.15);
+
+        }
+
+        .alert-item{
+
+            display:flex;
+            align-items:center;
+
+            gap:10px;
+
+            margin:10px 0;
+
+        }
+
+        .circle{
+
+            width:18px;
+            height:18px;
+
+            border-radius:50%;
+
+        }
+
+        .green{background:#2ecc71;}
+        .yellow{background:#f1c40f;}
+        .red{background:#e74c3c;}
+
+        footer{
+
+            background:#003049;
+
+            color:white;
+
+            text-align:center;
+
+            padding:35px;
+
+        }
+
+        @media(max-width:768px){
+
+            .navbar{
+                flex-direction:column;
+                gap:15px;
+            }
+
+            .hero h1{
+                font-size:2rem;
+            }
+
+            .map-alert{
+
+                position:static;
+
+                width:100%;
+
+                margin-top:15px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-circle">
+                AL
+            </div>
+
+            Agua Limpia, Vida Sana
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#salud">Salud</a></li>
+                <li><a href="#actua">Prevención</a></li>
+                <li><a href="#mapa">Mapa</a></li>
+                <li><a href="#integrantes">Integrantes</a></li>
+
+            </ul>
+
+        </nav>
+
+    </div>
+
+</header>
+
+<main>
+
+<section class="hero" id="inicio">
+
+    <div class="hero-content">
+
+        <h1>La contaminación del agua impacta nuestra salud y nuestros ecosistemas</h1>
+
+        <p>
+            El Río de la Plata enfrenta desafíos ambientales vinculados a residuos urbanos,
+            efluentes industriales y proliferación de cianobacterias.
+        </p>
+
+        <div class="ods-tags">
+
+            <div class="tag">ODS 3</div>
+            <div class="tag">ODS 6</div>
+            <div class="tag">ODS 12</div>
+            <div class="tag">ODS 14</div>
+            <div class="tag">ODS 15</div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="mapa">
+
+    <div class="section-title">
+
+        <h2>Mapa Comunitario del Agua</h2>
+
+        <p>
+            Puntos de hidratación y referencias comunitarias distribuidas en CABA
+        </p>
+
+    </div>
+
+    <div class="map-box">
+
+        <!-- FUTURA INTEGRACIÓN:
+        API de datos oficiales
+        Backend
+        Actualización automática
+        -->
+
+        <div class="map-container">
+
+            <div id="map"></div>
+
+            <div class="map-alert">
+
+                <h4>Semáforo de Alerta</h4>
+
+                <div class="alert-item">
+                    <div class="circle green"></div>
+                    Bajo Riesgo
+                </div>
+
+                <div class="alert-item">
+                    <div class="circle yellow"></div>
+                    Precaución
+                </div>
+
+                <div class="alert-item">
+                    <div class="circle red"></div>
+                    Evitar contacto
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="integrantes">
+
+    <div class="section-title">
+
+        <h2>Integrantes</h2>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">Sabrina De Marco Naón</div>
+        <div class="card">Olivia Pisani</div>
+        <div class="card">Guillermina Alvarez Cazas</div>
+        <div class="card">Carolina Lobo</div>
+        <div class="card">Valentina Marquez</div>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+
+    Proyecto CET - Agua Limpia, Vida Sana
+
+</footer>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+const map = L.map("map").setView([-34.6037,-58.3816],11);
+
+L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+        attribution:"OpenStreetMap"
+    }
+).addTo(map);
+
+const puntos = [
+
+[-34.6037,-58.3816,"Corrientes y Pellegrini"],
+[-34.6180,-58.3818,"Garay y Lima"],
+[-34.5957,-58.3768,"Esmeralda y Santa Fe"],
+[-34.5874,-58.3977,"Las Heras y Pueyrredón"],
+[-34.6099,-58.4050,"Mitre y Pueyrredón"],
+[-34.6247,-58.4038,"Plaza Martín Fierro"],
+[-34.6503,-58.4151,"Av. Sáenz"],
+[-34.6298,-58.3942,"Caseros y Rioja"],
+[-34.6032,-58.4208,"Corrientes y Medrano"],
+[-34.6202,-58.4381,"Rivadavia y Centenera"],
+[-34.6447,-58.4634,"Eva Perón y Varela"],
+[-34.6815,-58.4623,"Guaminí"],
+[-34.6834,-58.4482,"Barrio Savio"],
+[-34.6681,-58.4540,"Escalada"],
+[-34.6398,-58.5208,"Carhué"],
+[-34.6214,-58.5051,"Lope de Vega"],
+[-34.6045,-58.5035,"Cuenca"],
+[-34.5631,-58.4856,"Plaza Jorge Casal"],
+[-34.5612,-58.4563,"Cabildo y Juramento"],
+[-34.5868,-58.4076,"Coronel Díaz"],
+[-34.6027,-58.4304,"Scalabrini Ortiz"],
+[-34.5750,-58.4794,"Los Incas"]
+
+];
+
+puntos.forEach(p=>{
+
+    L.marker([p[0],p[1]])
+    .addTo(map)
+    .bindPopup(
+        "<b>Punto de hidratación / agua segura</b><br>"+p[2]
+    );
+
+});
+
+const zonasRiesgo = [
+
+    {
+        nombre:"Reserva Costanera Sur",
+        coords:[-34.612,-58.357],
+        color:"red",
+        riesgo:"Alerta alta por contaminación y presencia frecuente de cianobacterias"
+    },
+
+    {
+        nombre:"La Boca - Ribera",
+        coords:[-34.635,-58.363],
+        color:"red",
+        riesgo:"Zona de riesgo alto por contaminación histórica"
+    },
+
+    {
+        nombre:"Puerto Madero",
+        coords:[-34.603,-58.363],
+        color:"yellow",
+        riesgo:"Precaución ante episodios variables de contaminación"
+    },
+
+    {
+        nombre:"Costanera Norte",
+        coords:[-34.553,-58.415],
+        color:"yellow",
+        riesgo:"Precaución por floraciones estacionales"
+    },
+
+    {
+        nombre:"Vicente López Costero",
+        coords:[-34.520,-58.470],
+        color:"green",
+        riesgo:"Riesgo bajo actualmente"
+    },
+
+    {
+        nombre:"Quilmes Costero",
+        coords:[-34.720,-58.255],
+        color:"red",
+        riesgo:"Contaminación costera elevada"
+    },
+
+    {
+        nombre:"Berisso / Ensenada",
+        coords:[-34.870,-57.900],
+        color:"yellow",
+        riesgo:"Zona industrial cercana"
+    }
+
+];
+
+zonasRiesgo.forEach(z => {
+
+    L.circleMarker(
+        z.coords,
+        {
+
+            radius:10,
+
+            color:z.color,
+
+            fillColor:z.color,
+
+            fillOpacity:1,
+
+            weight:2
+
+        }
+
+    )
+
+    .addTo(map)
+
+    .bindPopup(
+
+        "<b>"+z.nombre+"</b><br>" +
+        z.riesgo
+
+    );
+
+});
+
+</script>
+
+</body>
+
+</html>
