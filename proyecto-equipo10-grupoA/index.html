@@ -1,597 +1,516 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Agua Limpia, Vida Sana</title>
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-
-    <style>
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
-        }
-
-        html{
-            scroll-behavior:smooth;
-        }
-
-        body{
-            background:#f4fbfc;
-            color:#243746;
-            line-height:1.6;
-        }
-
-        header{
-            background:linear-gradient(135deg,#0077b6,#00b4d8);
-            color:white;
-            padding:1rem 8%;
-            position:sticky;
-            top:0;
-            z-index:1000;
-            box-shadow:0 3px 10px rgba(0,0,0,.15);
-        }
-
-        .navbar{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            flex-wrap:wrap;
-        }
-
-        .logo{
-            display:flex;
-            align-items:center;
-            gap:12px;
-            font-size:1.2rem;
-            font-weight:bold;
-        }
-
-        .logo-circle{
-            width:50px;
-            height:50px;
-            border-radius:12px;
-            background:rgba(255,255,255,.2);
-
-            display:flex;
-            justify-content:center;
-            align-items:center;
-
-            font-weight:bold;
-        }
-
-        nav ul{
-            list-style:none;
-            display:flex;
-            gap:25px;
-            flex-wrap:wrap;
-        }
-
-        nav a{
-            color:white;
-            text-decoration:none;
-            font-weight:bold;
-        }
-
-        .hero{
-
-            min-height:85vh;
-
-            display:flex;
-            justify-content:center;
-            align-items:center;
-
-            text-align:center;
-
-            padding:4rem 8%;
-
-            background:
-            linear-gradient(rgba(0,80,120,.75),rgba(0,80,120,.75)),
-            url("https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80");
-
-            background-size:cover;
-            background-position:center;
-
-            color:white;
-        }
-
-        .hero-content{
-            max-width:900px;
-        }
-
-        .hero h1{
-            font-size:3rem;
-            margin-bottom:20px;
-        }
-
-        .ods-tags{
-            display:flex;
-            justify-content:center;
-            gap:10px;
-            flex-wrap:wrap;
-            margin-top:20px;
-        }
-
-        .tag{
-            padding:10px 18px;
-            border-radius:25px;
-            background:rgba(255,255,255,.18);
-        }
-
-        section{
-            padding:75px 8%;
-        }
-
-        .section-title{
-            text-align:center;
-            margin-bottom:45px;
-        }
-
-        .section-title h2{
-            color:#0d4f63;
-            margin-bottom:10px;
-        }
-
-        .cards,
-        .steps{
-
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-
-            gap:25px;
-
-        }
-
-        .card,
-        .step{
-
-            background:white;
-
-            padding:28px;
-
-            border-radius:16px;
-
-            border:1px solid #d8e6ea;
-
-            box-shadow:0 3px 10px rgba(0,0,0,.05);
-
-        }
-
-        .card-icon{
-
-            width:55px;
-            height:55px;
-
-            border-radius:50%;
-
-            background:#eaf6f8;
-
-            display:flex;
-            justify-content:center;
-            align-items:center;
-
-            font-size:.8rem;
-            font-weight:bold;
-
-            margin-bottom:15px;
-
-        }
-
-        .step span{
-
-            width:40px;
-            height:40px;
-
-            display:inline-flex;
-            justify-content:center;
-            align-items:center;
-
-            border-radius:50%;
-
-            background:#dbeef2;
-
-            font-weight:bold;
-
-        }
-
-        .step h3{
-            margin:15px 0;
-        }
-
-        .map-box{
-
-            background:white;
-
-            padding:30px;
-
-            border-radius:20px;
-
-            box-shadow:0 5px 15px rgba(0,0,0,.08);
-
-        }
-
-        .map-container{
-            position:relative;
-        }
-
-        #map{
-
-            height:500px;
-            width:100%;
-
-            border-radius:15px;
-
-            border:1px solid #d8e6ea;
-
-        }
-
-        .map-alert{
-
-            position:absolute;
-
-            top:20px;
-            right:20px;
-
-            width:240px;
-
-            z-index:1000;
-
-            background:rgba(255,255,255,.95);
-
-            border-radius:12px;
-
-            padding:18px;
-
-            box-shadow:0 3px 10px rgba(0,0,0,.15);
-
-        }
-
-        .alert-item{
-
-            display:flex;
-            align-items:center;
-
-            gap:10px;
-
-            margin:10px 0;
-
-        }
-
-        .circle{
-
-            width:18px;
-            height:18px;
-
-            border-radius:50%;
-
-        }
-
-        .green{background:#2ecc71;}
-        .yellow{background:#f1c40f;}
-        .red{background:#e74c3c;}
-
-        footer{
-
-            background:#003049;
-
-            color:white;
-
-            text-align:center;
-
-            padding:35px;
-
-        }
-
-        @media(max-width:768px){
-
-            .navbar{
-                flex-direction:column;
-                gap:15px;
-            }
-
-            .hero h1{
-                font-size:2rem;
-            }
-
-            .map-alert{
-
-                position:static;
-
-                width:100%;
-
-                margin-top:15px;
-
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agua Limpia · Río de la Plata</title>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
+<!-- Estilos propios -->
+<link rel="stylesheet" href="style.css">
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
 
+<div class="bubbles">
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════ -->
 <header>
-
-    <div class="navbar">
-
-        <div class="logo">
-
-            <div class="logo-circle">
-                AL
-            </div>
-
-            Agua Limpia, Vida Sana
-
-        </div>
-
-        <nav>
-
-            <ul>
-
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#salud">Salud</a></li>
-                <li><a href="#actua">Prevención</a></li>
-                <li><a href="#mapa">Mapa</a></li>
-                <li><a href="#integrantes">Integrantes</a></li>
-
-            </ul>
-
-        </nav>
-
-    </div>
-
+  <div class="logo">
+    <span>💧</span> Agua Limpia · Río de la Plata
+  </div>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#salud">Salud</a>
+    <a href="#actua">Actúa</a>
+    <a href="#mapa">Mapa</a>
+    <a href="#herramientas">Herramientas</a>
+    <a href="#estadisticas">Estadísticas</a>
+    <a href="#integrantes">Equipo</a>
+  </nav>
 </header>
 
-<main>
-
-<section class="hero" id="inicio">
-
-    <div class="hero-content">
-
-        <h1>La contaminación del agua impacta nuestra salud y nuestros ecosistemas</h1>
-
-        <p>
-            El Río de la Plata enfrenta desafíos ambientales vinculados a residuos urbanos,
-            efluentes industriales y proliferación de cianobacterias.
-        </p>
-
-        <div class="ods-tags">
-
-            <div class="tag">ODS 3</div>
-            <div class="tag">ODS 6</div>
-            <div class="tag">ODS 12</div>
-            <div class="tag">ODS 14</div>
-            <div class="tag">ODS 15</div>
-
-        </div>
-
+<!-- ═══ HERO ═══════════════════════════════════════════ -->
+<section id="inicio">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="tagline">ODS 3 · 6 · 12 · 14 · 15</div>
+      <h1>El agua del <em>Río de la Plata</em> en crisis</h1>
+      <p>Contaminación por plomo, arsénico, cianobacterias y residuos industriales amenaza la salud de millones en la región.</p>
+      <div class="ods-badges">
+        <span class="ods-badge" style="color:#4c9f38;border-color:#4c9f38">ODS 3 · Salud</span>
+        <span class="ods-badge" style="color:#26bde2;border-color:#26bde2">ODS 6 · Agua</span>
+        <span class="ods-badge" style="color:#bf8b2e;border-color:#bf8b2e">ODS 12 · Consumo</span>
+        <span class="ods-badge" style="color:#0a97d9;border-color:#0a97d9">ODS 14 · Mares</span>
+        <span class="ods-badge" style="color:#56c02b;border-color:#56c02b">ODS 15 · Ecosistemas</span>
+      </div>
+      <div class="hero-btns">
+        <a href="#mapa" class="btn-primary">🗺️ Ver Mapa de Riesgo</a>
+        <a href="#herramientas" class="btn-secondary">🧪 Herramientas</a>
+      </div>
     </div>
-
+    <div class="hero-visual">
+      <div class="sonar-rings">
+        <div class="ring3"></div>
+        <div class="hero-icon"></div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-pill"><span>⚠️</span><div><strong>3.5M</strong><br><small>personas expuestas</small></div></div>
+        <div class="stat-pill"><span>🦠</span><div><strong>47%</strong><br><small>zonas con bacterias</small></div></div>
+        <div class="stat-pill"><span>🐟</span><div><strong>-62%</strong><br><small>fauna acuática</small></div></div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="mapa">
+<!-- BARRA INTERACTIVA -->
+<div class="interactive-bar">
+  <button class="ibar-btn" onclick="openModal('modal-zonas')">
+    <span class="icon">🚨</span> ¿Qué hacer en zonas afectadas?
+  </button>
+  <button class="ibar-btn" onclick="openModal('modal-calc')">
+    <span class="icon">🧮</span> Calculadora de Riesgo
+  </button>
+  <button class="ibar-btn" onclick="openModal('modal-quiz')">
+    <span class="icon">❓</span> Quiz de Concientización
+  </button>
+  <button class="ibar-btn" onclick="document.getElementById('herramientas').scrollIntoView({behavior:'smooth'})">
+    <span class="icon">📊</span> Ver Estadísticas
+  </button>
+</div>
 
-    <div class="section-title">
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,24 C360,48 1080,0 1440,24 L1440,48 L0,48 Z" fill="rgba(132,215,212,0.12)"/>
+  </svg>
+</div>
 
-        <h2>Mapa Comunitario del Agua</h2>
+<!-- ═══ SALUD ═══════════════════════════════════════════ -->
+<section id="salud">
+  <div class="container">
+    <div class="section-bg">
+      <div class="section-title">
+        <h2>Riesgos para la Salud</h2>
+        <p>Los contaminantes del Río de la Plata generan enfermedades crónicas, agudas y daños ambientales irreversibles.</p>
+      </div>
+      <div class="diagnostic-grid">
 
-        <p>
-            Puntos de hidratación y referencias comunitarias distribuidas en CABA
-        </p>
+        <div class="diag-card glass-card">
+          <div class="card-icon">🦠</div>
+          <h3>Enfermedades Gastrointestinales</h3>
+          <p>Bacterias como <em>E. coli</em>, <em>Salmonella</em> y coliformes fecales causan diarrea, vómitos y gastroenteritis. La OMS registra 485.000 muertes anuales globales por agua no tratada.</p>
+        </div>
 
+        <div class="diag-card glass-card">
+          <div class="card-icon">🧠</div>
+          <h3>Intoxicación por Plomo</h3>
+          <p>El plomo en agua afecta el desarrollo neurológico infantil irreversiblemente. Estudios en La Boca detectaron niveles 3× por encima del límite OMS. Causa déficit cognitivo y retraso madurativo.</p>
+        </div>
+
+        <div class="diag-card glass-card">
+          <div class="card-icon">⚗️</div>
+          <h3>Arsénico y Cáncer</h3>
+          <p>El arsénico inorgánico es cancerígeno confirmado (IARC Grupo 1). Exposición crónica eleva el riesgo de cáncer de piel, vejiga y pulmón. El Riachuelo presenta concentraciones 5× sobre el límite seguro.</p>
+        </div>
+
+        <div class="diag-card glass-card">
+          <div class="card-icon">🌿</div>
+          <h3>Cianobacterias Tóxicas</h3>
+          <p>Las floraciones de <em>Microcystis aeruginosa</em> en temporada estival producen microcistinas hepatotóxicas. ACUMAR registró 18 episodios críticos entre 2019–2023 en zonas de uso recreativo.</p>
+        </div>
+
+        <div class="diag-card glass-card">
+          <div class="card-icon">🫁</div>
+          <h3>Daño Respiratorio</h3>
+          <p>Los compuestos orgánicos volátiles (COV) liberados por industrias petroquímicas en Dock Sud causan irritación de vías respiratorias, asma y mayor prevalencia de EPOC en poblaciones costeras.</p>
+        </div>
+
+        <div class="diag-card glass-card">
+          <div class="card-icon">🐟</div>
+          <h3>Impacto en la Fauna</h3>
+          <p>Los bifenilos policlorados (PCB) y metales pesados bioacumulan en la cadena trófica. Las concentraciones en peces del Riachuelo superan los límites de consumo humano establecidos por SENASA.</p>
+        </div>
+
+        <div class="diag-card glass-card">
+          <div class="card-icon">💊</div>
+          <h3>Resistencia Antibiótica</h3>
+          <p>Los efluentes hospitalarios y domésticos no tratados introducen genes de resistencia a antibióticos en el río. Argentina registra 78 cepas resistentes aisladas en sedimentos del estuario (CONICET, 2022).</p>
+        </div>
+
+        <div class="diag-card glass-card">
+          <div class="card-icon">🌡️</div>
+          <h3>Endocrinología y Plásticos</h3>
+          <p>Los microplásticos y disruptores endocrinos (bisfenol A, ftalatos) presentes en el río alteran el sistema hormonal. Estudios nacionales detectaron microplásticos en el 92% de las muestras de agua del estuario.</p>
+        </div>
+
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="map-box">
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 C360,48 1080,-10 1440,20 L1440,48 L0,48 Z" fill="rgba(132,191,215,0.10)"/>
+  </svg>
+</div>
 
-        <!-- FUTURA INTEGRACIÓN:
-        API de datos oficiales
-        Backend
-        Actualización automática
-        -->
-
-        <div class="map-container">
-
-            <div id="map"></div>
-
-            <div class="map-alert">
-
-                <h4>Semáforo de Alerta</h4>
-
-                <div class="alert-item">
-                    <div class="circle green"></div>
-                    Bajo Riesgo
-                </div>
-
-                <div class="alert-item">
-                    <div class="circle yellow"></div>
-                    Precaución
-                </div>
-
-                <div class="alert-item">
-                    <div class="circle red"></div>
-                    Evitar contacto
-                </div>
-
+<!-- ═══ ACTÚA ═══════════════════════════════════════════ -->
+<section id="actua">
+  <div class="container">
+    <div class="section-bg">
+      <div class="section-title">
+        <h2>Prevención y Acción</h2>
+        <p>Pasos concretos para protegerte y contribuir a la solución del problema de contaminación hídrica.</p>
+      </div>
+      <div class="prevention-layout">
+        <div>
+          <h3 style="color:var(--teal-deep);font-family:'Playfair Display',serif;margin-bottom:20px;font-size:1.2rem;">Pasos de Protección Personal</h3>
+          <div class="steps-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-content">
+                <h4>Informate sobre tu zona</h4>
+                <p>Consultá el mapa de riesgo y los alertas de ACUMAR para saber si tu barrio tiene contaminación activa.</p>
+              </div>
             </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-content">
+                <h4>No consumas agua sin tratar</h4>
+                <p>El agua de pozo en zonas costeras puede estar contaminada. Usá agua corriente y filtrá con carbón activado.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-content">
+                <h4>Evitá el contacto recreativo</h4>
+                <p>No te bañes ni practiques deportes acuáticos en zonas de alerta roja o amarilla del mapa.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-content">
+                <h4>No consumas peces de zonas rojas</h4>
+                <p>Los peces del Riachuelo y Dock Sud acumulan metales pesados. Verificá el origen antes de consumirlos.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">5</div>
+              <div class="step-content">
+                <h4>Reportá vertidos ilegales</h4>
+                <p>Llamá al 0800-333-2280 (ACUMAR) o al 147 de CABA para denunciar vuelcos industriales sospechosos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 style="color:var(--teal-deep);font-family:'Playfair Display',serif;margin-bottom:20px;font-size:1.2rem;">Prácticas Comunitarias</h3>
+          <div class="practices-grid">
+            <div class="practice-item">
+              <span class="pi-icon">🧹</span>
+              <div>
+                <strong>Jornadas de limpieza costera</strong>
+                <p>Participá en las jornadas mensuales de limpieza del GCBA y ACUMAR en la costanera.</p>
+              </div>
+            </div>
+            <div class="practice-item">
+              <span class="pi-icon">🗑️</span>
+              <div>
+                <strong>Separar residuos correctamente</strong>
+                <p>Los residuos en la vía pública llegan al río. Usá los puntos de reciclaje y evitá descartar en cunetas.</p>
+              </div>
+            </div>
+            <div class="practice-item">
+              <span class="pi-icon">📢</span>
+              <div>
+                <strong>Concientizar a tu comunidad</strong>
+                <p>Compartí esta información, armá charlas en tu escuela o club. La educación ambiental es la herramienta más poderosa.</p>
+              </div>
+            </div>
+            <div class="practice-item">
+              <span class="pi-icon">🌱</span>
+              <div>
+                <strong>Plantas fitorremeadoras</strong>
+                <p>Especies como juncos y totoras absorben contaminantes. Apoyá proyectos de restauración de humedales costeros.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 C480,48 960,0 1440,28 L1440,48 L0,48 Z" fill="rgba(132,215,212,0.08)"/>
+  </svg>
+</div>
+
+<!-- ═══ MAPA ═══════════════════════════════════════════ -->
+<section id="mapa">
+  <div class="container">
+    <div class="section-title">
+      <h2>Mapa de Contaminación</h2>
+      <p>Zonas de riesgo ambiental por contaminación y cianobacterias, y puntos de agua potable segura en CABA y alrededores.</p>
+    </div>
+    <div class="map-layout">
+      <div id="map"></div>
+      <div class="map-panel">
+        <h3>🗺️ Leyenda del Mapa</h3>
+        <div class="legend-item">
+          <div class="legend-dot verde"></div>
+          <div class="legend-desc">
+            <strong>Zona Verde · Riesgo Bajo</strong>
+            <p>Tigre → Belgrano. Contaminación moderada por runoff urbano. Monitoreo regular. Evitar ingesta.</p>
+          </div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot amarillo"></div>
+          <div class="legend-desc">
+            <strong>Zona Amarilla · Riesgo Medio</strong>
+            <p>Costanera Sur / Puerto Madero y Berisso / Ensenada. Presencia de coliformes y metales. No apto para baño.</p>
+          </div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot rojo"></div>
+          <div class="legend-desc">
+            <strong>Zona Roja · Riesgo Alto</strong>
+            <p>Riachuelo, La Boca, Dock Sud, Quilmes. Arsénico, plomo y PCB en niveles críticos. Prohibido todo contacto.</p>
+          </div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#2196f3;color:#2196f3;box-shadow:0 0 8px #2196f3;"></div>
+          <div class="legend-desc">
+            <strong>Puntos Azules · Agua Potable</strong>
+            <p>Bocas de agua certificadas por AySA. Agua tratada y apta para consumo humano.</p>
+          </div>
+        </div>
+        <p class="panel-note">ℹ️ Datos basados en informes de ACUMAR 2023, CONICET y monitoreos de AySA. Las zonas son orientativas.</p>
+      </div>
+    </div>
+    <div class="map-info-strip">
+      <div class="map-info-card glass-card">
+        <div class="mic-icon">❤️‍🩹</div>
+        <h4>Riesgo para la Salud Humana</h4>
+        <p>El consumo de agua contaminada del Río de la Plata provoca enfermedades gastrointestinales agudas, intoxicación por metales pesados y efectos cancerígenos a largo plazo en poblaciones ribereñas.</p>
+      </div>
+      <div class="map-info-card glass-card">
+        <div class="mic-icon">🌿</div>
+        <h4>Impacto en la Calidad de Vida</h4>
+        <p>Las comunidades de Villa Inflamable y Dock Sud presentan tasas de plombemia infantil 4× superiores a la media nacional. El 34% de los niños de la cuenca Matanza-Riachuelo muestra afectaciones crónicas.</p>
+      </div>
+      <div class="map-info-card glass-card">
+        <div class="mic-icon">🐦</div>
+        <h4>Impacto Ambiental</h4>
+        <p>Se perdió el 60% de la biodiversidad acuática en las últimas 3 décadas. Los humedales costeros reducen su extensión 2,5% anual. Los cormoranes y gaviotas muestran bioacumulación crítica de mercurio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,10 C360,45 1080,5 1440,30 L1440,48 L0,48 Z" fill="rgba(200,169,110,0.10)"/>
+  </svg>
+</div>
+
+<!-- ═══ HERRAMIENTAS ═══════════════════════════════════ -->
+<section id="herramientas">
+  <div class="container">
+    <div class="section-bg">
+      <div class="section-title">
+        <h2>Herramientas Interactivas</h2>
+        <p>Evaluá tu riesgo, ponete a prueba y reportá anomalías en tu zona.</p>
+      </div>
+      <div class="tools-grid">
+
+        <div class="tool-card" onclick="openModal('modal-calc')">
+          <div class="tc-icon">🧮</div>
+          <h3>Calculadora de Riesgo</h3>
+          <p>Respondé 6 preguntas sobre tu consumo de agua y ambiente. El sistema determina tu nivel de exposición.</p>
+          <button class="tc-btn">Evaluar mi riesgo →</button>
         </div>
 
-    </div>
+        <div class="tool-card" onclick="openModal('modal-quiz')">
+          <div class="tc-icon">🎯</div>
+          <h3>Quiz de Concientización</h3>
+          <p>¿Cuánto sabés sobre el agua contaminada? Poné a prueba tus conocimientos con 7 preguntas.</p>
+          <button class="tc-btn">Empezar quiz →</button>
+        </div>
 
+        <div class="tool-card" onclick="openModal('modal-zonas')">
+          <div class="tc-icon">🚨</div>
+          <h3>Zonas Afectadas</h3>
+          <p>Conocé qué hacer si vivís o trabajás en una zona de riesgo hídrico. Guía de acción inmediata.</p>
+          <button class="tc-btn">Ver guía →</button>
+        </div>
+
+        <div class="report-card">
+          <h3>📣 Contador de Reportes</h3>
+          <p>Reportes enviados en esta sesión</p>
+          <div class="report-counter" id="contador">0</div>
+          <p>Cada reporte contribuye al monitoreo comunitario del río</p>
+          <button class="tc-btn" onclick="enviarReporte()">📍 Reportar anomalía</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </section>
 
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,24 C480,0 960,48 1440,20 L1440,48 L0,48 Z" fill="rgba(132,215,212,0.09)"/>
+  </svg>
+</div>
+
+<!-- ═══ ESTADÍSTICAS ═══════════════════════════════════ -->
+<section id="estadisticas">
+  <div class="container">
+    <div class="section-bg">
+      <div class="section-title">
+        <h2>Estadísticas Visuales</h2>
+        <p>Datos cuantitativos sobre la contaminación, reportes y evolución de alertas en la región.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="chart-card">
+          <h3>Zonas Contaminadas por Nivel</h3>
+          <canvas id="chartZonas"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Reportes por Barrio (2023)</h3>
+          <canvas id="chartBarrios"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Evolución de Alertas (2019–2023)</h3>
+          <canvas id="chartAlertas"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Contaminantes Detectados (%)</h3>
+          <canvas id="chartContaminantes"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,15 C360,48 1080,0 1440,25 L1440,48 L0,48 Z" fill="rgba(132,191,215,0.09)"/>
+  </svg>
+</div>
+
+<!-- ═══ INTEGRANTES ═══════════════════════════════════ -->
 <section id="integrantes">
-
+  <div class="container">
     <div class="section-title">
-
-        <h2>Integrantes</h2>
-
+      <h2>Equipo del Proyecto</h2>
+      <p>CET · Proyecto Ambiental · 2024</p>
     </div>
-
-    <div class="cards">
-
-        <div class="card">Sabrina De Marco Naón</div>
-        <div class="card">Olivia Pisani</div>
-        <div class="card">Guillermina Alvarez Cazas</div>
-        <div class="card">Carolina Lobo</div>
-        <div class="card">Valentina Marquez</div>
-
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">👤</div>
+        <h4>Sabrina De Marco Naón</h4>
+        <p>Investigación</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👤</div>
+        <h4>Carolina Lobo</h4>
+        <p>Desarrollo</p>
+      </div>
     </div>
-
+  </div>
 </section>
 
-</main>
-
+<!-- ═══ FOOTER ═══════════════════════════════════════ -->
 <footer>
-
-    Proyecto CET - Agua Limpia, Vida Sana
-
+  <p><strong>Agua Limpia · Río de la Plata</strong> — Proyecto CET · 2024</p>
+  <p>Datos: ACUMAR · CONICET · AySA · OMS · SENASA</p>
+  <div class="footer-ods">
+    <span class="ods-badge" style="color:#4c9f38;border-color:#4c9f38;font-size:0.75rem">ODS 3</span>
+    <span class="ods-badge" style="color:#26bde2;border-color:#26bde2;font-size:0.75rem">ODS 6</span>
+    <span class="ods-badge" style="color:#bf8b2e;border-color:#bf8b2e;font-size:0.75rem">ODS 12</span>
+    <span class="ods-badge" style="color:#0a97d9;border-color:#0a97d9;font-size:0.75rem">ODS 14</span>
+    <span class="ods-badge" style="color:#56c02b;border-color:#56c02b;font-size:0.75rem">ODS 15</span>
+  </div>
 </footer>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- ═══ MODAL: ZONAS AFECTADAS ═══════════════════════ -->
+<div class="modal-overlay" id="modal-zonas">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-zonas')">✕</button>
+    <h2>🚨 ¿Qué hacer en zonas afectadas?</h2>
+    <p>Según el nivel de riesgo de tu zona, estas son las acciones recomendadas:</p>
+    <div class="zona-list">
+      <div class="zona-item">
+        <div class="zona-dot rojo"></div>
+        <div>
+          <strong>🔴 Zona Roja — Riesgo Alto (Riachuelo, Dock Sud, Quilmes)</strong>
+          <p>No tocar ni ingresar al agua bajo ningún concepto. No consumir peces capturados. Usar solo agua potable certificada. Controlar niveles de plomo en sangre (pedí turno en tu CAPS). Denunciar vuelcos al 0800-333-2280.</p>
+        </div>
+      </div>
+      <div class="zona-item">
+        <div class="zona-dot amarillo"></div>
+        <div>
+          <strong>🟡 Zona Amarilla — Riesgo Medio (Costanera, Puerto Madero, Ensenada)</strong>
+          <p>No bañarse ni practicar deportes acuáticos en alertas activas. Filtrar agua de pozo con carbón activado. Lavarse manos con agua potable después de actividades al aire libre. Mantener niños alejados de la orilla.</p>
+        </div>
+      </div>
+      <div class="zona-item">
+        <div class="zona-dot verde"></div>
+        <div>
+          <strong>🟢 Zona Verde — Riesgo Bajo (Tigre, Belgrano, Delta)</strong>
+          <p>Actividad recreativa permitida con precaución. No ingesta de agua del río. Lavarse tras el contacto. Seguir alertas de ACUMAR en verano por cianobacterias.</p>
+        </div>
+      </div>
+    </div>
+    <div class="advice-box">
+      <h4>📞 Contactos de Emergencia</h4>
+      <p>• <strong>ACUMAR:</strong> 0800-333-2280 (gratuito, 24hs)<br>
+         • <strong>SAME:</strong> 107 — urgencias de salud<br>
+         • <strong>Defensa Civil:</strong> 103<br>
+         • <strong>GCBA Ambiente:</strong> 147 (denuncias)</p>
+    </div>
+    <div class="advice-box" style="margin-top:12px">
+      <h4>🏥 Síntomas de alarma</h4>
+      <p>Si tras contacto con el agua sentís fiebre, erupciones en piel, vómitos o diarrea, concurrí a guardia médica y mencioná el contacto con agua del río.</p>
+    </div>
+  </div>
+</div>
 
-<script>
+<!-- ═══ MODAL: CALCULADORA ═══════════════════════════ -->
+<div class="modal-overlay" id="modal-calc">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-calc')">✕</button>
+    <h2>🧮 Calculadora de Riesgo Hídrico</h2>
+    <div class="calc-progress" id="calc-progress"></div>
+    <div id="calc-body"></div>
+  </div>
+</div>
 
-const map = L.map("map").setView([-34.6037,-58.3816],11);
+<!-- ═══ MODAL: QUIZ ═══════════════════════════════════ -->
+<div class="modal-overlay" id="modal-quiz">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modal-quiz')">✕</button>
+    <h2>🎯 Quiz de Concientización</h2>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-bar" style="width:0%"></div></div>
+    <div id="quiz-body"></div>
+  </div>
+</div>
 
-L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-        attribution:"OpenStreetMap"
-    }
-).addTo(map);
-
-const puntos = [
-
-[-34.6037,-58.3816,"Corrientes y Pellegrini"],
-[-34.6180,-58.3818,"Garay y Lima"],
-[-34.5957,-58.3768,"Esmeralda y Santa Fe"],
-[-34.5874,-58.3977,"Las Heras y Pueyrredón"],
-[-34.6099,-58.4050,"Mitre y Pueyrredón"],
-[-34.6247,-58.4038,"Plaza Martín Fierro"],
-[-34.6503,-58.4151,"Av. Sáenz"],
-[-34.6298,-58.3942,"Caseros y Rioja"],
-[-34.6032,-58.4208,"Corrientes y Medrano"],
-[-34.6202,-58.4381,"Rivadavia y Centenera"],
-[-34.6447,-58.4634,"Eva Perón y Varela"],
-[-34.6815,-58.4623,"Guaminí"],
-[-34.6834,-58.4482,"Barrio Savio"],
-[-34.6681,-58.4540,"Escalada"],
-[-34.6398,-58.5208,"Carhué"],
-[-34.6214,-58.5051,"Lope de Vega"],
-[-34.6045,-58.5035,"Cuenca"],
-[-34.5631,-58.4856,"Plaza Jorge Casal"],
-[-34.5612,-58.4563,"Cabildo y Juramento"],
-[-34.5868,-58.4076,"Coronel Díaz"],
-[-34.6027,-58.4304,"Scalabrini Ortiz"],
-[-34.5750,-58.4794,"Los Incas"]
-
-];
-
-puntos.forEach(p=>{
-
-    L.marker([p[0],p[1]])
-    .addTo(map)
-    .bindPopup(
-        "<b>Punto de hidratación / agua segura</b><br>"+p[2]
-    );
-
-});
-
-const zonasRiesgo = [
-
-    {
-        nombre:"Reserva Costanera Sur",
-        coords:[-34.612,-58.357],
-        color:"red",
-        riesgo:"Alerta alta por contaminación y presencia frecuente de cianobacterias"
-    },
-
-    {
-        nombre:"La Boca - Ribera",
-        coords:[-34.635,-58.363],
-        color:"red",
-        riesgo:"Zona de riesgo alto por contaminación histórica"
-    },
-
-    {
-        nombre:"Puerto Madero",
-        coords:[-34.603,-58.363],
-        color:"yellow",
-        riesgo:"Precaución ante episodios variables de contaminación"
-    },
-
-    {
-        nombre:"Costanera Norte",
-        coords:[-34.553,-58.415],
-        color:"yellow",
-        riesgo:"Precaución por floraciones estacionales"
-    },
-
-    {
-        nombre:"Vicente López Costero",
-        coords:[-34.520,-58.470],
-        color:"green",
-        riesgo:"Riesgo bajo actualmente"
-    },
-
-    {
-        nombre:"Quilmes Costero",
-        coords:[-34.720,-58.255],
-        color:"red",
-        riesgo:"Contaminación costera elevada"
-    },
-
-    {
-        nombre:"Berisso / Ensenada",
-        coords:[-34.870,-57.900],
-        color:"yellow",
-        riesgo:"Zona industrial cercana"
-    }
-
-];
-
-zonasRiesgo.forEach(z => {
-
-    L.circleMarker(
-        z.coords,
-        {
-
-            radius:10,
-
-            color:z.color,
-
-            fillColor:z.color,
-
-            fillOpacity:1,
-
-            weight:2
-
-        }
-
-    )
-
-    .addTo(map)
-
-    .bindPopup(
-
-        "<b>"+z.nombre+"</b><br>" +
-        z.riesgo
-
-    );
-
-});
-
-</script>
-
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Script propio -->
+<script src="script.js"></script>
 </body>
-
 </html>
