@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -80,7 +79,7 @@
   <button class="ibar-btn" onclick="openModal('modal-quiz')">
     <span class="icon">❓</span> Quiz de Concientización
   </button>
-  <button class="ibar-btn" onclick="document.getElementById('estadisticas').scrollIntoView({behavior:'smooth'})">
+  <button class="ibar-btn" onclick="scrollToStats()">
     <span class="icon">📊</span> Ver Estadísticas
   </button>
 </div>
@@ -396,7 +395,7 @@
         <div class="report-card">
           <h3>📣 Contador de Reportes</h3>
           <p>Reportes enviados en esta sesión</p>
-          <div class="report-counter" id="contador">0</div>
+          <div class="report-counter" id="report-count">0</div>
           <p>Cada reporte contribuye al monitoreo comunitario del río</p>
           <button class="tc-btn" onclick="enviarReporte()">📍 Reportar anomalía</button>
         </div>
@@ -423,19 +422,19 @@
       <div class="stats-grid">
         <div class="chart-card">
           <h3>Zonas Contaminadas por Nivel</h3>
-          <canvas id="chartZonas"></canvas>
+          <canvas id="chart-zonas"></canvas>
         </div>
         <div class="chart-card">
           <h3>Reportes por Barrio (2023)</h3>
-          <canvas id="chartBarrios"></canvas>
+          <canvas id="chart-reportes"></canvas>
         </div>
         <div class="chart-card">
           <h3>Evolución de Alertas (2019–2023)</h3>
-          <canvas id="chartAlertas"></canvas>
+          <canvas id="chart-alertas"></canvas>
         </div>
         <div class="chart-card">
           <h3>Contaminantes Detectados (%)</h3>
-          <canvas id="chartContaminantes"></canvas>
+          <canvas id="chart-contaminantes"></canvas>
         </div>
       </div>
     </div>
@@ -516,7 +515,7 @@
   <div class="container">
     <div class="section-title">
       <h2>Equipo del Proyecto</h2>
-      <p>CET · Proyecto Ambiental · 2024</p>
+      <p>CET · Proyecto Ambiental · 2026</p>
     </div>
     <div class="team-grid">
       <div class="team-card">
@@ -535,7 +534,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <p><strong>Agua Limpia · Río de la Plata</strong> — Proyecto CET · 2024</p>
+  <p><strong>Agua Limpia · Río de la Plata</strong> — Proyecto CET · 2026</p>
   <p>Datos: ACUMAR · CONICET · AySA · OMS · SENASA · IARC</p>
   <div class="footer-ods">
     <span class="ods-badge ods-3 ods-sm">ODS 3</span>
@@ -594,8 +593,7 @@
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal('modal-calc')">✕</button>
     <h2>🧮 Calculadora de Riesgo Hídrico</h2>
-    <div class="calc-progress" id="calc-progress"></div>
-    <div id="calc-body"></div>
+    <div id="calc-content"></div>
   </div>
 </div>
 
@@ -605,10 +603,11 @@
     <button class="modal-close" onclick="closeModal('modal-quiz')">✕</button>
     <h2>🎯 Quiz de Concientización</h2>
     <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-bar"></div></div>
-    <div id="quiz-body"></div>
+    <div id="quiz-content"></div>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="script.js"></script>
 </body>

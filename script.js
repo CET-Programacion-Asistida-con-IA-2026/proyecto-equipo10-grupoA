@@ -16,6 +16,10 @@ document.addEventListener('click', function(e) {
   }
 });
 
+function scrollToStats() {
+  document.getElementById('estadisticas').scrollIntoView({ behavior: 'smooth' });
+}
+
 /* ══════════════════════════════════════════
    ACORDEÓN — SALUD
 ══════════════════════════════════════════ */
