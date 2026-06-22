@@ -518,19 +518,11 @@ const revealObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 /* ══════════════════════════════════════════
-   NAV ACTIVO EN SCROLL
+   NAV ACTIVO POR PÁGINA
 ══════════════════════════════════════════ */
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('nav a[href^="#"]');
-
-const activeObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
-      });
-    }
+(function() {
+  const page = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('nav a').forEach(a => {
+    if (a.getAttribute('href') === page) a.classList.add('active');
   });
-}, { rootMargin:'-40% 0px -55% 0px' });
-
-sections.forEach(s => activeObserver.observe(s));
+})();

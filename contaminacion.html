@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contaminación y Salud · Agua Limpia</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bubbles">
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<header>
+  <div class="logo">
+    <span>💧</span> Agua Limpia · Río de la Plata
+  </div>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="contaminacion.html">Contaminación</a>
+    <a href="accion.html">Actúa</a>
+    <a href="datos.html">Datos y Equipo</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Inicio</a> <span>/</span> Contaminación y Salud</div>
+    <h1>Contaminación y Salud</h1>
+    <p>Qué contaminantes hay en el Río de la Plata, dónde están y cómo afectan la salud de las personas y los ecosistemas.</p>
+  </div>
+</section>
+
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,24 C360,48 1080,0 1440,24 L1440,48 L0,48 Z" fill="rgba(132,215,212,0.12)"/>
+  </svg>
+</div>
+
+<!-- RIESGOS PARA LA SALUD -->
+<section id="salud">
+  <div class="container">
+    <div class="section-bg">
+      <div class="section-title">
+        <h2>Riesgos para la Salud</h2>
+        <p>Los contaminantes del Río de la Plata generan enfermedades crónicas, agudas y daños ambientales irreversibles. Hacé clic en cada riesgo para ver más información.</p>
+      </div>
+
+      <div class="accordion">
+
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <span class="acc-icon">🦠</span>
+            <span>Enfermedades Gastrointestinales</span>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>Bacterias como <em>E. coli</em>, <em>Salmonella</em> y coliformes fecales causan diarrea, vómitos y gastroenteritis aguda. La OMS estima 485.000 muertes anuales globales asociadas al consumo de agua no tratada.<br><small class="fuente-inline">Fuente: OMS, 2019</small></p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <span class="acc-icon">🧠</span>
+            <span>Intoxicación por Plomo</span>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>El plomo en agua afecta el desarrollo neurológico infantil de forma irreversible. Estudios en La Boca detectaron niveles 3× por encima del límite OMS (10 µg/L). Provoca déficit cognitivo y retraso madurativo.<br><small class="fuente-inline">Fuente: ACUMAR, Informe de calidad de agua 2023</small></p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <span class="acc-icon">⚗️</span>
+            <span>Arsénico y Riesgo de Cáncer</span>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>El arsénico inorgánico es cancerígeno confirmado (IARC Grupo 1). La exposición crónica eleva el riesgo de cáncer de piel, vejiga y pulmón. El Riachuelo presenta concentraciones 5× sobre el límite seguro.<br><small class="fuente-inline">Fuente: IARC Monographs Vol. 100C; ACUMAR 2022</small></p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <span class="acc-icon">🌿</span>
+            <span>Cianobacterias Tóxicas</span>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>Las floraciones de <em>Microcystis aeruginosa</em> en temporada estival producen microcistinas hepatotóxicas. ACUMAR registró 18 episodios críticos entre 2019 y 2023 en zonas de uso recreativo.<br><small class="fuente-inline">Fuente: ACUMAR, Informes de floración algal 2019–2023</small></p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <span class="acc-icon">🫁</span>
+            <span>Daño Respiratorio por COV</span>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>Los compuestos orgánicos volátiles (COV) liberados por industrias petroquímicas en Dock Sud causan irritación de vías respiratorias, asma y mayor prevalencia de EPOC en poblaciones costeras.<br><small class="fuente-inline">Fuente: Defensoría del Pueblo CABA, 2021</small></p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <span class="acc-icon">🐟</span>
+            <span>Bioacumulación en Fauna</span>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>Los bifenilos policlorados (PCB) y metales pesados se bioacumulan en la cadena trófica. Las concentraciones en peces del Riachuelo superan los límites de consumo humano establecidos por SENASA.<br><small class="fuente-inline">Fuente: SENASA Res. 48/2021; CONICET 2022</small></p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <span class="acc-icon">💊</span>
+            <span>Resistencia Antibiótica</span>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>Los efluentes hospitalarios y domésticos no tratados introducen genes de resistencia a antibióticos en el río. Argentina registra 78 cepas multirresistentes aisladas en sedimentos del estuario.<br><small class="fuente-inline">Fuente: CONICET, Rev. Argentina de Microbiología 2022</small></p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-header" onclick="toggleAcc(this)">
+            <span class="acc-icon">🌡️</span>
+            <span>Microplásticos y Disruptores Endocrinos</span>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="acc-body">
+            <p>Los microplásticos y disruptores endocrinos (bisfenol A, ftalatos) presentes en el río alteran el sistema hormonal. Estudios nacionales detectaron microplásticos en el 92% de las muestras de agua del estuario.<br><small class="fuente-inline">Fuente: CONICET / INIDEP, Estudio estuario 2023</small></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,0 C360,48 1080,-10 1440,20 L1440,48 L0,48 Z" fill="rgba(132,191,215,0.10)"/>
+  </svg>
+</div>
+
+<!-- MAPA -->
+<section id="mapa">
+  <div class="container">
+    <div class="section-title">
+      <h2>Mapa de Contaminación</h2>
+      <p>Zonas de riesgo ambiental y puntos de agua potable segura en CABA y alrededores.</p>
+    </div>
+    <div class="map-layout">
+      <div id="map"></div>
+      <div class="map-panel">
+        <h3>🗺️ Leyenda del Mapa</h3>
+        <div class="legend-item">
+          <div class="legend-dot verde"></div>
+          <div class="legend-desc">
+            <strong>Zona Verde · Riesgo Bajo</strong>
+            <p>Tigre → Belgrano. Contaminación moderada. Monitoreo regular. Evitar ingesta.</p>
+          </div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot amarillo"></div>
+          <div class="legend-desc">
+            <strong>Zona Amarilla · Riesgo Medio</strong>
+            <p>Costanera Sur, Puerto Madero, Ensenada. Coliformes y metales. No apto para baño.</p>
+          </div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot rojo"></div>
+          <div class="legend-desc">
+            <strong>Zona Roja · Riesgo Alto</strong>
+            <p>Riachuelo, La Boca, Dock Sud, Quilmes. Arsénico, plomo y PCB críticos. Prohibido todo contacto.</p>
+          </div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot azul"></div>
+          <div class="legend-desc">
+            <strong>Puntos Azules · Agua Potable</strong>
+            <p>Bocas certificadas por AySA. Agua tratada y apta para consumo.</p>
+          </div>
+        </div>
+        <p class="panel-note">ℹ️ Datos de ACUMAR 2023, CONICET y AySA. Las zonas son orientativas.</p>
+      </div>
+    </div>
+    <div class="map-info-strip">
+      <div class="map-info-card glass-card">
+        <div class="mic-icon">❤️‍🩹</div>
+        <h4>Riesgo para la Salud Humana</h4>
+        <p>El consumo de agua contaminada provoca enfermedades gastrointestinales, intoxicación por metales pesados y efectos cancerígenos a largo plazo en poblaciones ribereñas.</p>
+      </div>
+      <div class="map-info-card glass-card">
+        <div class="mic-icon">🌿</div>
+        <h4>Impacto en la Calidad de Vida</h4>
+        <p>Las comunidades de Villa Inflamable y Dock Sud presentan tasas de plombemia infantil 4× superiores a la media nacional. El 34% de los niños de la cuenca muestra afectaciones crónicas.</p>
+      </div>
+      <div class="map-info-card glass-card">
+        <div class="mic-icon">🐦</div>
+        <h4>Impacto Ambiental</h4>
+        <p>Se perdió el 60% de la biodiversidad acuática en 3 décadas. Los humedales reducen su extensión 2,5% anual. Los cormoranes y gaviotas muestran bioacumulación crítica de mercurio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Agua Limpia · Río de la Plata</strong> — Proyecto CET · 2026</p>
+  <p>Datos: ACUMAR · CONICET · AySA · OMS · SENASA · IARC</p>
+  <div class="footer-ods">
+    <span class="ods-badge ods-3 ods-sm">ODS 3</span>
+    <span class="ods-badge ods-6 ods-sm">ODS 6</span>
+    <span class="ods-badge ods-12 ods-sm">ODS 12</span>
+    <span class="ods-badge ods-14 ods-sm">ODS 14</span>
+    <span class="ods-badge ods-15 ods-sm">ODS 15</span>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

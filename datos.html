@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datos y Equipo · Agua Limpia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bubbles">
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<header>
+  <div class="logo">
+    <span>💧</span> Agua Limpia · Río de la Plata
+  </div>
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="contaminacion.html">Contaminación</a>
+    <a href="accion.html">Actúa</a>
+    <a href="datos.html">Datos y Equipo</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Inicio</a> <span>/</span> Datos y Equipo</div>
+    <h1>Datos y Equipo</h1>
+    <p>Estadísticas visuales sobre la contaminación, fuentes institucionales y el equipo detrás de este proyecto.</p>
+  </div>
+</section>
+
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,15 C360,48 1080,0 1440,25 L1440,48 L0,48 Z" fill="rgba(132,191,215,0.09)"/>
+  </svg>
+</div>
+
+<!-- ESTADÍSTICAS -->
+<section id="estadisticas">
+  <div class="container">
+    <div class="section-bg">
+      <div class="section-title">
+        <h2>Estadísticas Visuales</h2>
+        <p>Datos cuantitativos sobre la contaminación, reportes y evolución de alertas en la región.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="chart-card">
+          <h3>Zonas Contaminadas por Nivel</h3>
+          <canvas id="chart-zonas"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Reportes por Barrio (2023)</h3>
+          <canvas id="chart-reportes"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Evolución de Alertas (2019–2023)</h3>
+          <canvas id="chart-alertas"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Contaminantes Detectados (%)</h3>
+          <canvas id="chart-contaminantes"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,15 C360,48 1080,0 1440,25 L1440,48 L0,48 Z" fill="rgba(132,191,215,0.09)"/>
+  </svg>
+</div>
+
+<!-- FUENTES + EQUIPO -->
+<section id="fuentes">
+  <div class="container">
+    <div class="fuentes-equipo-row">
+
+      <div class="section-bg fuentes-compact">
+        <div class="section-title">
+          <h2>Fuentes y Referencias</h2>
+          <p>Información respaldada por organismos oficiales e instituciones científicas verificables.</p>
+        </div>
+        <div class="fuentes-triggers">
+          <button class="fuente-trigger" onclick="toggleFuentesPanel('panel-fuentes-left')">
+            <span class="ft-icon">←</span>
+            <div>
+              <strong>Organismos Nacionales</strong>
+              <small>ACUMAR · CONICET · AySA</small>
+            </div>
+          </button>
+          <button class="fuente-trigger" onclick="toggleFuentesPanel('panel-fuentes-right')">
+            <div>
+              <strong>Organismos Internacionales</strong>
+              <small>OMS · SENASA · IARC</small>
+            </div>
+            <span class="ft-icon">→</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="section-bg fuentes-compact">
+        <div class="section-title">
+          <h2>Equipo del Proyecto</h2>
+          <p>CET · Proyecto Ambiental · 2026</p>
+        </div>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-avatar">👤</div>
+            <h4>Sabrina De Marco Naón</h4>
+            <p>Investigación</p>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">👤</div>
+            <h4>Carolina Lobo</h4>
+            <p>Desarrollo</p>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">👤</div>
+            <h4>Guillermina Alvarez</h4>
+            <p>Diseño</p>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar">👤</div>
+            <h4>Luana</h4>
+            <p>Contenido</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PANEL LATERAL IZQUIERDO -->
+<div class="fuentes-panel fuentes-panel-left" id="panel-fuentes-left">
+  <div class="fp-header">
+    <h3>Organismos Nacionales</h3>
+    <button class="fp-close" onclick="closeFuentesPanel('panel-fuentes-left')">✕</button>
+  </div>
+  <div class="fp-body">
+    <div class="fp-card">
+      <div class="fp-logo">🏛️</div>
+      <h4>ACUMAR</h4>
+      <p>Autoridad de Cuenca Matanza Riachuelo. Informes anuales de calidad de agua, alertas de cianobacterias y monitoreo de zonas de riesgo (2019–2023). Principal organismo de control de la cuenca más contaminada del país.</p>
+      <a class="fuente-link" href="https://www.acumar.gob.ar" target="_blank" rel="noopener">acumar.gob.ar →</a>
+    </div>
+    <div class="fp-card">
+      <div class="fp-logo">🔬</div>
+      <h4>CONICET</h4>
+      <p>Consejo Nacional de Investigaciones Científicas y Técnicas. Estudios sobre microplásticos en el estuario, resistencia antibiótica y bioacumulación de metales pesados. Publicaciones en revistas indexadas (2022–2023).</p>
+      <a class="fuente-link" href="https://www.conicet.gov.ar" target="_blank" rel="noopener">conicet.gov.ar →</a>
+    </div>
+    <div class="fp-card">
+      <div class="fp-logo">💧</div>
+      <h4>AySA</h4>
+      <p>Agua y Saneamientos Argentinos. Datos de puntos de agua potable certificada, cobertura de red y calidad del servicio en CABA y Gran Buenos Aires. Referencia para los puntos seguros del mapa.</p>
+      <a class="fuente-link" href="https://www.aysa.com.ar" target="_blank" rel="noopener">aysa.com.ar →</a>
+    </div>
+  </div>
+</div>
+
+<!-- PANEL LATERAL DERECHO -->
+<div class="fuentes-panel fuentes-panel-right" id="panel-fuentes-right">
+  <div class="fp-header">
+    <h3>Organismos Internacionales</h3>
+    <button class="fp-close" onclick="closeFuentesPanel('panel-fuentes-right')">✕</button>
+  </div>
+  <div class="fp-body">
+    <div class="fp-card">
+      <div class="fp-logo">🌍</div>
+      <h4>OMS</h4>
+      <p>Organización Mundial de la Salud. Guías de calidad del agua potable, límites de contaminantes (plomo, arsénico) y estadísticas de mortalidad por agua no tratada: 485.000 muertes anuales por diarrea vinculada al agua.</p>
+      <a class="fuente-link" href="https://www.who.int/es" target="_blank" rel="noopener">who.int →</a>
+    </div>
+    <div class="fp-card">
+      <div class="fp-logo">🐄</div>
+      <h4>SENASA</h4>
+      <p>Servicio Nacional de Sanidad y Calidad Agroalimentaria. Resolución 48/2021 sobre límites de metales pesados en peces para consumo humano. Base normativa para las recomendaciones sobre consumo de pescado.</p>
+      <a class="fuente-link" href="https://www.senasa.gob.ar" target="_blank" rel="noopener">senasa.gob.ar →</a>
+    </div>
+    <div class="fp-card">
+      <div class="fp-logo">🏥</div>
+      <h4>IARC</h4>
+      <p>Agencia Internacional para la Investigación sobre el Cáncer. Monografías Vol. 100C: clasificación del arsénico inorgánico como cancerígeno confirmado del Grupo 1. Referencia para el apartado de riesgo oncológico.</p>
+      <a class="fuente-link" href="https://www.iarc.who.int" target="_blank" rel="noopener">iarc.who.int →</a>
+    </div>
+  </div>
+</div>
+
+<div class="fuentes-overlay" id="fuentes-overlay" onclick="closeAllFuentesPanels()"></div>
+
+<footer>
+  <p><strong>Agua Limpia · Río de la Plata</strong> — Proyecto CET · 2026</p>
+  <p>Datos: ACUMAR · CONICET · AySA · OMS · SENASA · IARC</p>
+  <div class="footer-ods">
+    <span class="ods-badge ods-3 ods-sm">ODS 3</span>
+    <span class="ods-badge ods-6 ods-sm">ODS 6</span>
+    <span class="ods-badge ods-12 ods-sm">ODS 12</span>
+    <span class="ods-badge ods-14 ods-sm">ODS 14</span>
+    <span class="ods-badge ods-15 ods-sm">ODS 15</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
