@@ -450,59 +450,89 @@
 <!-- FUENTES -->
 <section id="fuentes">
   <div class="container">
-    <div class="section-bg">
+    <div class="section-bg fuentes-compact">
       <div class="section-title">
         <h2>Fuentes y Referencias</h2>
-        <p>Toda la información de este sitio está respaldada por organismos oficiales, instituciones científicas y datos verificables.</p>
+        <p>Información respaldada por organismos oficiales e instituciones científicas verificables.</p>
       </div>
-      <div class="fuentes-grid">
-
-        <div class="fuente-card glass-card">
-          <div class="fuente-logo">🏛️</div>
-          <h4>ACUMAR</h4>
-          <p>Autoridad de Cuenca Matanza Riachuelo. Informes anuales de calidad de agua, alertas de cianobacterias y monitoreo de zonas de riesgo (2019–2023).</p>
-          <a class="fuente-link" href="https://www.acumar.gob.ar" target="_blank" rel="noopener">acumar.gob.ar →</a>
-        </div>
-
-        <div class="fuente-card glass-card">
-          <div class="fuente-logo">🔬</div>
-          <h4>CONICET</h4>
-          <p>Consejo Nacional de Investigaciones Científicas y Técnicas. Estudios sobre microplásticos en el estuario, resistencia antibiótica y bioacumulación de metales pesados (2022–2023).</p>
-          <a class="fuente-link" href="https://www.conicet.gov.ar" target="_blank" rel="noopener">conicet.gov.ar →</a>
-        </div>
-
-        <div class="fuente-card glass-card">
-          <div class="fuente-logo">💧</div>
-          <h4>AySA</h4>
-          <p>Agua y Saneamientos Argentinos. Datos de puntos de agua potable certificada, cobertura de red y calidad del servicio en CABA y Gran Buenos Aires.</p>
-          <a class="fuente-link" href="https://www.aysa.com.ar" target="_blank" rel="noopener">aysa.com.ar →</a>
-        </div>
-
-        <div class="fuente-card glass-card">
-          <div class="fuente-logo">🌍</div>
-          <h4>OMS</h4>
-          <p>Organización Mundial de la Salud. Guías de calidad del agua potable, límites máximos de contaminantes (plomo, arsénico) y estadísticas de mortalidad por agua no tratada.</p>
-          <a class="fuente-link" href="https://www.who.int/es" target="_blank" rel="noopener">who.int →</a>
-        </div>
-
-        <div class="fuente-card glass-card">
-          <div class="fuente-logo">🐄</div>
-          <h4>SENASA</h4>
-          <p>Servicio Nacional de Sanidad y Calidad Agroalimentaria. Resolución 48/2021 sobre límites de metales pesados en peces para consumo humano.</p>
-          <a class="fuente-link" href="https://www.senasa.gob.ar" target="_blank" rel="noopener">senasa.gob.ar →</a>
-        </div>
-
-        <div class="fuente-card glass-card">
-          <div class="fuente-logo">🏥</div>
-          <h4>IARC</h4>
-          <p>Agencia Internacional para la Investigación sobre el Cáncer. Monografías Vol. 100C: clasificación del arsénico inorgánico como cancerígeno del Grupo 1.</p>
-          <a class="fuente-link" href="https://www.iarc.who.int" target="_blank" rel="noopener">iarc.who.int →</a>
-        </div>
-
+      <div class="fuentes-triggers">
+        <button class="fuente-trigger fuente-trigger-left" onclick="toggleFuentesPanel('panel-fuentes-left')">
+          <span class="ft-icon">←</span>
+          <div>
+            <strong>Organismos Nacionales</strong>
+            <small>ACUMAR · CONICET · AySA</small>
+          </div>
+        </button>
+        <button class="fuente-trigger fuente-trigger-right" onclick="toggleFuentesPanel('panel-fuentes-right')">
+          <div>
+            <strong>Organismos Internacionales</strong>
+            <small>OMS · SENASA · IARC</small>
+          </div>
+          <span class="ft-icon">→</span>
+        </button>
       </div>
     </div>
   </div>
 </section>
+
+<!-- PANEL LATERAL IZQUIERDO — Fuentes Nacionales -->
+<div class="fuentes-panel fuentes-panel-left" id="panel-fuentes-left">
+  <div class="fp-header">
+    <h3>Organismos Nacionales</h3>
+    <button class="fp-close" onclick="closeFuentesPanel('panel-fuentes-left')">✕</button>
+  </div>
+  <div class="fp-body">
+    <div class="fp-card">
+      <div class="fp-logo">🏛️</div>
+      <h4>ACUMAR</h4>
+      <p>Autoridad de Cuenca Matanza Riachuelo. Informes anuales de calidad de agua, alertas de cianobacterias y monitoreo de zonas de riesgo (2019–2023). Principal organismo de control de la cuenca más contaminada del país.</p>
+      <a class="fuente-link" href="https://www.acumar.gob.ar" target="_blank" rel="noopener">acumar.gob.ar →</a>
+    </div>
+    <div class="fp-card">
+      <div class="fp-logo">🔬</div>
+      <h4>CONICET</h4>
+      <p>Consejo Nacional de Investigaciones Científicas y Técnicas. Estudios sobre microplásticos en el estuario, resistencia antibiótica y bioacumulación de metales pesados. Publicaciones en revistas indexadas (2022–2023).</p>
+      <a class="fuente-link" href="https://www.conicet.gov.ar" target="_blank" rel="noopener">conicet.gov.ar →</a>
+    </div>
+    <div class="fp-card">
+      <div class="fp-logo">💧</div>
+      <h4>AySA</h4>
+      <p>Agua y Saneamientos Argentinos. Datos de puntos de agua potable certificada, cobertura de red y calidad del servicio en CABA y Gran Buenos Aires. Referencia para puntos seguros en el mapa interactivo.</p>
+      <a class="fuente-link" href="https://www.aysa.com.ar" target="_blank" rel="noopener">aysa.com.ar →</a>
+    </div>
+  </div>
+</div>
+
+<!-- PANEL LATERAL DERECHO — Fuentes Internacionales -->
+<div class="fuentes-panel fuentes-panel-right" id="panel-fuentes-right">
+  <div class="fp-header">
+    <h3>Organismos Internacionales</h3>
+    <button class="fp-close" onclick="closeFuentesPanel('panel-fuentes-right')">✕</button>
+  </div>
+  <div class="fp-body">
+    <div class="fp-card">
+      <div class="fp-logo">🌍</div>
+      <h4>OMS</h4>
+      <p>Organización Mundial de la Salud. Guías de calidad del agua potable, límites máximos de contaminantes (plomo, arsénico) y estadísticas de mortalidad por agua no tratada: 485.000 muertes anuales por diarrea vinculada al agua.</p>
+      <a class="fuente-link" href="https://www.who.int/es" target="_blank" rel="noopener">who.int →</a>
+    </div>
+    <div class="fp-card">
+      <div class="fp-logo">🐄</div>
+      <h4>SENASA</h4>
+      <p>Servicio Nacional de Sanidad y Calidad Agroalimentaria. Resolución 48/2021 sobre límites de metales pesados en peces para consumo humano. Base normativa para las recomendaciones sobre consumo de pescado de la cuenca.</p>
+      <a class="fuente-link" href="https://www.senasa.gob.ar" target="_blank" rel="noopener">senasa.gob.ar →</a>
+    </div>
+    <div class="fp-card">
+      <div class="fp-logo">🏥</div>
+      <h4>IARC</h4>
+      <p>Agencia Internacional para la Investigación sobre el Cáncer. Monografías Vol. 100C: clasificación del arsénico inorgánico como cancerígeno confirmado del Grupo 1. Referencia para el apartado de riesgo oncológico.</p>
+      <a class="fuente-link" href="https://www.iarc.who.int" target="_blank" rel="noopener">iarc.who.int →</a>
+    </div>
+  </div>
+</div>
+
+<!-- OVERLAY para cerrar paneles -->
+<div class="fuentes-overlay" id="fuentes-overlay" onclick="closeAllFuentesPanels()"></div>
 
 <div class="wave-divider">
   <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">

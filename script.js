@@ -16,6 +16,28 @@ document.addEventListener('click', function(e) {
   }
 });
 
+/* ══════════════════════════════════════════
+   PANELES LATERALES — FUENTES
+══════════════════════════════════════════ */
+function toggleFuentesPanel(id) {
+  const panel = document.getElementById(id);
+  const overlay = document.getElementById('fuentes-overlay');
+  const isOpen = panel.classList.contains('open');
+  closeAllFuentesPanels();
+  if (!isOpen) {
+    panel.classList.add('open');
+    overlay.classList.add('active');
+  }
+}
+function closeFuentesPanel(id) {
+  document.getElementById(id).classList.remove('open');
+  document.getElementById('fuentes-overlay').classList.remove('active');
+}
+function closeAllFuentesPanels() {
+  document.querySelectorAll('.fuentes-panel').forEach(p => p.classList.remove('open'));
+  document.getElementById('fuentes-overlay').classList.remove('active');
+}
+
 function scrollToStats() {
   document.getElementById('estadisticas').scrollIntoView({ behavior: 'smooth' });
 }
