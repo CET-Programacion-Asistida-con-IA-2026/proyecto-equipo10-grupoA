@@ -30,8 +30,7 @@
     <a href="#mapa">Mapa</a>
     <a href="#herramientas">Herramientas</a>
     <a href="#estadisticas">Estadísticas</a>
-    <a href="#fuentes">Fuentes</a>
-    <a href="#integrantes">Equipo</a>
+    <a href="#fuentes">Fuentes y Equipo</a>
   </nav>
 </header>
 
@@ -448,29 +447,54 @@
 </div>
 
 <!-- FUENTES -->
-<section id="fuentes">
+<section id="fuentes" id="integrantes">
   <div class="container">
-    <div class="section-bg fuentes-compact">
-      <div class="section-title">
-        <h2>Fuentes y Referencias</h2>
-        <p>Información respaldada por organismos oficiales e instituciones científicas verificables.</p>
+    <div class="fuentes-equipo-row">
+
+      <!-- COLUMNA IZQUIERDA: FUENTES -->
+      <div class="section-bg fuentes-compact">
+        <div class="section-title">
+          <h2>Fuentes y Referencias</h2>
+          <p>Información respaldada por organismos oficiales e instituciones científicas verificables.</p>
+        </div>
+        <div class="fuentes-triggers">
+          <button class="fuente-trigger" onclick="toggleFuentesPanel('panel-fuentes-left')">
+            <span class="ft-icon">←</span>
+            <div>
+              <strong>Organismos Nacionales</strong>
+              <small>ACUMAR · CONICET · AySA</small>
+            </div>
+          </button>
+          <button class="fuente-trigger" onclick="toggleFuentesPanel('panel-fuentes-right')">
+            <div>
+              <strong>Organismos Internacionales</strong>
+              <small>OMS · SENASA · IARC</small>
+            </div>
+            <span class="ft-icon">→</span>
+          </button>
+        </div>
       </div>
-      <div class="fuentes-triggers">
-        <button class="fuente-trigger fuente-trigger-left" onclick="toggleFuentesPanel('panel-fuentes-left')">
-          <span class="ft-icon">←</span>
-          <div>
-            <strong>Organismos Nacionales</strong>
-            <small>ACUMAR · CONICET · AySA</small>
+
+      <!-- COLUMNA DERECHA: EQUIPO -->
+      <div class="section-bg fuentes-compact">
+        <div class="section-title">
+          <h2>Equipo del Proyecto</h2>
+          <p>CET · Proyecto Ambiental · 2026</p>
+        </div>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-avatar">👤</div>
+            <h4>Sabrina De Marco Naón</h4>
+            <p>Investigación</p>
           </div>
-        </button>
-        <button class="fuente-trigger fuente-trigger-right" onclick="toggleFuentesPanel('panel-fuentes-right')">
-          <div>
-            <strong>Organismos Internacionales</strong>
-            <small>OMS · SENASA · IARC</small>
+          <div class="team-card">
+            <div class="team-avatar">👤</div>
+            <h4>Carolina Lobo</h4>
+            <p>Desarrollo</p>
           </div>
-          <span class="ft-icon">→</span>
-        </button>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -533,34 +557,6 @@
 
 <!-- OVERLAY para cerrar paneles -->
 <div class="fuentes-overlay" id="fuentes-overlay" onclick="closeAllFuentesPanels()"></div>
-
-<div class="wave-divider">
-  <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,15 C360,48 1080,0 1440,25 L1440,48 L0,48 Z" fill="rgba(132,191,215,0.09)"/>
-  </svg>
-</div>
-
-<!-- INTEGRANTES -->
-<section id="integrantes">
-  <div class="container">
-    <div class="section-title">
-      <h2>Equipo del Proyecto</h2>
-      <p>CET · Proyecto Ambiental · 2026</p>
-    </div>
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="team-avatar">👤</div>
-        <h4>Sabrina De Marco Naón</h4>
-        <p>Investigación</p>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar">👤</div>
-        <h4>Carolina Lobo</h4>
-        <p>Desarrollo</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- FOOTER -->
 <footer>
