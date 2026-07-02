@@ -256,31 +256,46 @@ const quizPreguntas = [
     pregunta: '¿Cuál es el principal contaminante del Río de la Plata según los estudios del CONICET?',
     opciones: ['Petróleo crudo','Metales pesados y agroquímicos','Residuos plásticos exclusivamente','Sal marina'],
     correcta: 1,
-    explicacion: 'Los metales pesados (plomo, mercurio, cromo) y los agroquímicos (glifosato, atrazina) son los principales contaminantes identificados por el CONICET en la cuenca.'
+    explicacion: 'Los metales pesados (plomo, mercurio, cromo) y los agroquímicos (glifosato, atrazina) son los principales contaminantes identificados por el CONICET en la cuenca.',
+    tema: 'Metales pesados y agroquímicos',
+    icono: '🧪',
+    infoExtra: 'El plomo y el mercurio provienen sobre todo de curtiembres, industrias metalúrgicas y galvanoplastía instaladas a lo largo de la cuenca, mientras que el glifosato y la atrazina llegan por escorrentía desde campos agrícolas cercanos. Estas sustancias se acumulan en sedimentos y en la cadena alimentaria, por lo que sus efectos persisten incluso años después de reducirse los vuelcos.'
   },
   {
     pregunta: '¿Qué organismo argentino es responsable del saneamiento de la cuenca Matanza-Riachuelo?',
     opciones: ['AySA','SENASA','ACUMAR','Ministerio de Obras Públicas'],
     correcta: 2,
-    explicacion: 'ACUMAR (Autoridad de Cuenca Matanza Riachuelo) es el organismo creado en 2006 para gestionar el saneamiento de la cuenca y controlar la contaminación.'
+    explicacion: 'ACUMAR (Autoridad de Cuenca Matanza Riachuelo) es el organismo creado en 2006 para gestionar el saneamiento de la cuenca y controlar la contaminación.',
+    tema: 'ACUMAR y el saneamiento de la cuenca',
+    icono: '🏛️',
+    infoExtra: 'ACUMAR reúne a Nación, Provincia de Buenos Aires y CABA, y nació tras el fallo "Mendoza" de la Corte Suprema en 2008, que ordenó recomponer el ambiente de la cuenca. Entre sus funciones están el control de industrias, la relocalización de asentamientos ribereños y el monitoreo periódico de la calidad del agua y el aire en la zona.'
   },
   {
     pregunta: '¿Cuántas personas viven en la cuenca Matanza-Riachuelo aproximadamente?',
     opciones: ['500.000','1 millón','5 millones','10 millones'],
     correcta: 2,
-    explicacion: 'Alrededor de 5 millones de personas habitan en la cuenca Matanza-Riachuelo, una de las más contaminadas de América Latina según la OMS.'
+    explicacion: 'Alrededor de 5 millones de personas habitan en la cuenca Matanza-Riachuelo, una de las más contaminadas de América Latina según la OMS.',
+    tema: 'Población e impacto social',
+    icono: '👥',
+    infoExtra: 'La cuenca abarca 14 municipios del conurbano bonaerense y parte de la Ciudad de Buenos Aires. Gran parte de esa población vive en villas y asentamientos precarios sin cloacas ni agua de red, lo que aumenta su exposición directa a los contaminantes y hace del saneamiento hídrico también un problema de justicia social.'
   },
   {
     pregunta: '¿Qué ODS de la ONU está directamente relacionado con el acceso al agua limpia y saneamiento?',
     opciones: ['ODS 3','ODS 6','ODS 12','ODS 14'],
     correcta: 1,
-    explicacion: 'El ODS 6 (Agua limpia y saneamiento) busca garantizar la disponibilidad y gestión sostenible del agua y el saneamiento para todos antes del 2030.'
+    explicacion: 'El ODS 6 (Agua limpia y saneamiento) busca garantizar la disponibilidad y gestión sostenible del agua y el saneamiento para todos antes del 2030.',
+    tema: 'ODS 6 · Agua limpia y saneamiento',
+    icono: '🎯',
+    infoExtra: 'El ODS 6 incluye metas específicas como mejorar la calidad del agua reduciendo la contaminación y los vertidos de sustancias peligrosas, proteger los ecosistemas relacionados con el agua y ampliar la cooperación internacional en proyectos de saneamiento. También se vincula con los ODS 3 (salud), 14 (vida submarina) y 15 (vida de ecosistemas terrestres) que se muestran en este sitio.'
   },
   {
     pregunta: '¿Cuál de estas enfermedades NO está directamente asociada al consumo de agua contaminada?',
     opciones: ['Hepatitis A','Cólera','Diabetes tipo 2','Leptospirosis'],
     correcta: 2,
-    explicacion: 'La diabetes tipo 2 es una enfermedad metabólica no infecciosa. Las otras tres (hepatitis A, cólera, leptospirosis) se transmiten a través del agua contaminada.'
+    explicacion: 'La diabetes tipo 2 es una enfermedad metabólica no infecciosa. Las otras tres (hepatitis A, cólera, leptospirosis) se transmiten a través del agua contaminada.',
+    tema: 'Enfermedades hídricas',
+    icono: '🏥',
+    infoExtra: 'La hepatitis A y el cólera se contagian por vía fecal-oral cuando el agua está contaminada con materia fecal, mientras que la leptospirosis se contrae por contacto de la piel o mucosas con agua u orina de roedores infectados, algo frecuente en zonas inundables de la cuenca. Ante síntomas como fiebre, diarrea o ictericia tras contacto con agua de dudosa calidad, se recomienda consultar rápidamente a un centro de salud.'
   }
 ];
 
@@ -366,13 +381,82 @@ function showQuizResult(box) {
   else if (quizScore >= 3) msg = 'Muy bien. Tenés buen conocimiento sobre contaminación hídrica.';
   else msg = 'Seguí aprendiendo. Cada dato cuenta para proteger el agua.';
 
+  injectQuizInfoStyles();
+
+  const temasHTML = quizPreguntas.map((q, i) =>
+    `<div class="quiz-info-card" id="quiz-info-card-${i}">
+       <button class="quiz-info-header" onclick="toggleQuizInfo(${i})">
+         <span class="quiz-info-icon">${q.icono}</span>
+         <span class="quiz-info-title">${q.tema}</span>
+         <span class="quiz-info-chevron" id="quiz-info-chev-${i}">▾</span>
+       </button>
+       <div class="quiz-info-body" id="quiz-info-body-${i}">
+         <p>${q.infoExtra}</p>
+       </div>
+     </div>`
+  ).join('');
+
   box.innerHTML = `
     <div class="quiz-result">
       <div class="quiz-score">${quizScore}/${quizPreguntas.length}</div>
       <p>${msg}</p>
       <button class="calc-restart" onclick="initQuiz()">Intentar de nuevo</button>
     </div>
+    <div class="quiz-info-section">
+      <h4 class="quiz-info-title-main">📚 Más información sobre cada tema</h4>
+      <p class="quiz-info-subtitle">Tocá un tema del quiz para profundizar.</p>
+      <div class="quiz-info-list">
+        ${temasHTML}
+      </div>
+    </div>
   `;
+
+  // Evento: al terminar el quiz, dispara un evento personalizado
+  // que otros scripts de la página puedan escuchar si lo necesitan.
+  document.dispatchEvent(new CustomEvent('quizFinalizado', {
+    detail: { score: quizScore, total: quizPreguntas.length, temas: quizPreguntas.map(q => q.tema) }
+  }));
+}
+
+function toggleQuizInfo(idx) {
+  const body = document.getElementById(`quiz-info-body-${idx}`);
+  const chev = document.getElementById(`quiz-info-chev-${idx}`);
+  const card = document.getElementById(`quiz-info-card-${idx}`);
+  if (!body) return;
+  const isOpen = body.classList.contains('open');
+
+  document.querySelectorAll('.quiz-info-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.quiz-info-chevron').forEach(c => c.classList.remove('rotated'));
+  document.querySelectorAll('.quiz-info-card').forEach(c => c.classList.remove('active'));
+
+  if (!isOpen) {
+    body.classList.add('open');
+    if (chev) chev.classList.add('rotated');
+    if (card) card.classList.add('active');
+  }
+}
+
+function injectQuizInfoStyles() {
+  if (document.getElementById('quiz-info-styles')) return;
+  const style = document.createElement('style');
+  style.id = 'quiz-info-styles';
+  style.textContent = `
+    .quiz-info-section { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(132,215,212,0.18); }
+    .quiz-info-title-main { margin: 0 0 4px; font-family: 'Playfair Display', serif; font-size: 1.05rem; color: #84D7D4; }
+    .quiz-info-subtitle { margin: 0 0 14px; font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+    .quiz-info-list { display: flex; flex-direction: column; gap: 10px; }
+    .quiz-info-card { border: 1px solid rgba(132,215,212,0.18); border-radius: 10px; overflow: hidden; background: rgba(255,255,255,0.03); transition: border-color .2s ease; }
+    .quiz-info-card.active { border-color: rgba(132,215,212,0.55); }
+    .quiz-info-header { width: 100%; display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: transparent; border: none; cursor: pointer; text-align: left; font-family: 'Lato', sans-serif; color: #fff; }
+    .quiz-info-icon { font-size: 1.1rem; }
+    .quiz-info-title { flex: 1; font-size: 0.92rem; font-weight: 600; }
+    .quiz-info-chevron { transition: transform .2s ease; color: #84D7D4; }
+    .quiz-info-chevron.rotated { transform: rotate(180deg); }
+    .quiz-info-body { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 14px; }
+    .quiz-info-body.open { max-height: 260px; padding: 0 14px 14px; }
+    .quiz-info-body p { margin: 0; font-size: 0.85rem; line-height: 1.55; color: rgba(255,255,255,0.82); }
+  `;
+  document.head.appendChild(style);
 }
 
 /* ══════════════════════════════════════════
